@@ -72,6 +72,22 @@ public class Appointment {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public User getPatient() {
+        return patient;
+    }
+
+    public void setPatient(User patient) {
+        this.patient = patient;
+    }
     
 
 }
