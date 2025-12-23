@@ -59,6 +59,10 @@ public class Doctor {
     @ManyToMany(mappedBy = "doctors")
     private Set<User> users = new HashSet<>();
 
+    // One-to-Many Relationship with DoctorAvailability: A doctor can have multiple availability slots
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DoctorAvailability> availabilities = new HashSet<>();
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -134,5 +138,13 @@ public class Doctor {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Set<DoctorAvailability> getAvailabilities() {
+        return availabilities;
+    }
+
+    public void setAvailabilities(Set<DoctorAvailability> availabilities) {
+        this.availabilities = availabilities;
     }
 }
