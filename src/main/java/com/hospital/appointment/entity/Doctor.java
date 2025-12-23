@@ -1,9 +1,16 @@
 package com.hospital.appointment.entity;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -44,8 +51,15 @@ public class Doctor {
     @Column(nullable = false)
     private int experienceYears;
 
-    // Getters and Setters
+    // One-to-Many Relationship with Appointment: A doctor can have many appointments
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Appointment> appointments = new HashSet<>();
 
+    // Many-to-Many Relationship with User (Patient): A doctor can have many patients (users), and a user can have multiple doctors
+    @ManyToMany(mappedBy = "doctors")
+    private Set<User> users = new HashSet<>();
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -105,6 +119,20 @@ public class Doctor {
     public void setExperienceYears(int experienceYears) {
         this.experienceYears = experienceYears;
     }
+
+    public Set<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 }
-
-

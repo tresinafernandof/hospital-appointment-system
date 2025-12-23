@@ -80,4 +80,5 @@ public class DoctorService {
     public boolean doctorExists(String email, String phone) {
         return doctorRepository.findByEmail(email) != null || doctorRepository.findByPhone(phone) != null;
     }
+
 }
