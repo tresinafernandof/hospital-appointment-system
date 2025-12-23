@@ -39,13 +39,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Notification> reminders = new HashSet<>();
 
-    // Many-to-Many relationship: A user can book availability slots based on doctor's availability.
-    @ManyToMany
-    @JoinTable(
-      name = "user_availability", 
-      joinColumns = @JoinColumn(name = "user_id"), 
-      inverseJoinColumns = @JoinColumn(name = "availability_slot_id"))
-    private Set<DoctorAvailability> availabilitySlots = new HashSet<>();
     public User() {
     }
     public User(String firstName, String lastName, String email, String phoneNumber, Date dateOfBirth, String gender) {
@@ -97,6 +90,24 @@ public class User {
     }
     public void setGender(String gender) {
         this.gender = gender;
+    }
+    public Set<Appointment> getAppointments() {
+        return appointments;
+    }
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+    public Set<Doctor> getDoctors() {
+        return doctors;
+    }
+    public void setDoctors(Set<Doctor> doctors) {
+        this.doctors = doctors;
+    }
+    public Set<Notification> getReminders() {
+        return reminders;
+    }
+    public void setReminders(Set<Notification> reminders) {
+        this.reminders = reminders;
     }
     
 }
