@@ -1,5 +1,14 @@
 package com.hospital.appointment.repository;
 
-public class DoctorAvailabilityRepository {
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.hospital.appointment.entity.DoctorAvailability;
+
+@Repository
+public interface DoctorAvailabilityRepository extends JpaRepository<DoctorAvailability, Long>{
+    List<DoctorAvailability> findByDoctorId(Long doctorId);
+    
 }
