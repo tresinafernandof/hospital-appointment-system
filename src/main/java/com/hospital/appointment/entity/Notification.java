@@ -20,7 +20,7 @@ public class Notification {
     private String targetType;
     // DOCTOR, PATIENT
 
-    /*Notification can be sent to either User or Doctor
+    //Notification can be sent to either User or Doctor
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -28,7 +28,7 @@ public class Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
-*/
+
     @Column(nullable = false, length = 500)
     private String message;
 

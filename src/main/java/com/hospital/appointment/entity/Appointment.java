@@ -12,7 +12,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*Many appointments can belong to one doctor
+    //Many appointments can belong to one doctor
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
@@ -21,7 +21,7 @@ public class Appointment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", nullable = false)
     private User patient;
-*/
+
     @Column(name = "start_datetime", nullable = false)
     private LocalDateTime startDateTime;
 
