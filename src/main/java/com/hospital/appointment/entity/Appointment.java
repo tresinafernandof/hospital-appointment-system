@@ -20,7 +20,7 @@ public class Appointment {
     // Many appointments can belong to one patient (User)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", nullable = false)
-    private User patient;
+    private User user;
 
     @Column(name = "start_datetime", nullable = false)
     private LocalDateTime startDateTime;
@@ -81,12 +81,12 @@ public class Appointment {
         this.doctor = doctor;
     }
 
-    public User getPatient() {
-        return patient;
+    public User getUser() {
+        return user;
     }
 
-    public void setPatient(User patient) {
-        this.patient = patient;
+    public void setUser(User user) {
+        this.user = user;
     }
     
 
