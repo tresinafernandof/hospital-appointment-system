@@ -2,10 +2,17 @@ package com.hospital.appointment.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class DoctorAvailability {
@@ -14,17 +21,29 @@ public class DoctorAvailability {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long doctorId;        // reference to doctor without relationship
+    // Many-to-One relationship with Doctor: A doctor has multiple availability slots
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    @NotNull(message = "Doctor is required")  // Validate that the doctor is not null
+    private Doctor doctor;
+
+    @Column(nullable = false)
+    @NotNull(message = "Start time is required")  // Ensure start time is not null
+    @FutureOrPresent(message = "Start time must be in the present or future")  // Ensure the start time is not in the past
     private LocalDateTime startTime;
+
+    @Column(nullable = false)
+    @NotNull(message = "End time is required")  // Ensure end time is not null
+    @FutureOrPresent(message = "End time must be in the present or future")  // Ensure the end time is not in the past
     private LocalDateTime endTime;
+
+    @Column(nullable = false)
     private boolean available = true;
 
-    public DoctorAvailability() {
-        // default constructor
-    }
+    public DoctorAvailability() {}
 
-    public DoctorAvailability(Long doctorId, LocalDateTime startTime, LocalDateTime endTime, boolean available) {
-        this.doctorId = doctorId;
+    public DoctorAvailability(Doctor doctor, LocalDateTime startTime, LocalDateTime endTime, boolean available) {
+        this.doctor = doctor;
         this.startTime = startTime;
         this.endTime = endTime;
         this.available = available;
@@ -39,12 +58,12 @@ public class DoctorAvailability {
         this.id = id;
     }
 
-    public Long getDoctorId() {
-        return doctorId;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public LocalDateTime getStartTime() {
@@ -69,5 +88,14 @@ public class DoctorAvailability {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    @Transient
+    public String getTimeSlot(){
+        return startTime + "-" + endTime;
+    }
+
+    public boolean overlaps(LocalDateTime checkStart,LocalDateTime checkEnd){
+        return (startTime.isBefore(checkEnd)&&endTime.isAfter(checkStart));
     }
 }
